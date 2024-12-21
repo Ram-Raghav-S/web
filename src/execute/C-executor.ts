@@ -28,6 +28,8 @@ export class CExecutor implements Executor {
             '--ulimit', `cpu=${EXECUTION_TIME_LIMIT}`,  // Limit to EXECUTION_TIME_LIMIT of CPU time
             '--memory', `${EXECUTION_MEMORY_LIMIT}m`, // Limit memory to EXECUTION_MEMORY_LIMIT MB
             '--mount', `type=bind,source=${tempFilePath},target=/main.c,readonly`,  // User does not have root permissions
+            '--security-opt', 'seccomp=unconfined',  // Allow system calls like fork()
+            '--pids-limit', '50',  // Limit number of processes to prevent fork bombs
             GCC_IMAGE_TAG,  
             'gcc -o /main /main.c && /main'  // command to execute: compile and run the program
         ];
