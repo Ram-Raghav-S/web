@@ -7,6 +7,7 @@ import {
     MAX_CHARS_TITLE_DESCRIPTION,
     MIN_CHARS,
     MAX_CHARS_TAG,
+    LANGUAGES,
 } from "../../../constants";
 import { createOrUpdateTags } from "@/src/utils";
 import { withAuth } from "@/src/auth/middleware";
@@ -27,7 +28,7 @@ const updateCodeTemplateSchema = Joi.object({
     title: Joi.string().min(MIN_CHARS).max(MAX_CHARS_TITLE_DESCRIPTION),
     description: Joi.string().min(MIN_CHARS).max(MAX_CHARS_TITLE_DESCRIPTION),
     code: Joi.string().max(MAX_CHARS_CONTENT),
-    language: Joi.string().min(2).max(50), 
+    language: Joi.string().valid(...LANGUAGES).optional(),
     tags: Joi.array().items(Joi.string().min(MIN_CHARS).max(MAX_CHARS_TAG)),
 });
 
